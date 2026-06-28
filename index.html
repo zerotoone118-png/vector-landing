@@ -852,6 +852,7 @@
     footer { padding: 1.75rem 1.5rem; }
   }
 </style>
+<script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body>
 
@@ -1138,7 +1139,7 @@
 
     <div class="cta-form" id="ctaForm">
       <input type="email" class="cta-input" id="ctaEmail" placeholder="your@email.com" />
-      <button class="cta-btn" onclick="signup()">Join Waitlist</button>
+      <button class="cta-btn" data-tally-open="A7aDye" data-tally-width="400" data-tally-overlay="1" data-tally-emoji-text="" data-tally-emoji-animation="none">Join Waitlist</button>
     </div>
     <p class="cta-micro" id="ctaMicro">No spam · Unsubscribe anytime</p>
     <p class="cta-ok" id="ctaOk">You're on the list. We'll reach out before launch.</p>
@@ -1163,32 +1164,6 @@
       if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
     })
   );
-
-async function signup() {
-  const emailInput = document.getElementById('ctaEmail');
-  const email = emailInput.value.trim();
-  if (!email || !email.includes('@')) {
-    emailInput.focus();
-    return;
-  }
-
-  const btn = document.querySelector('.cta-btn');
-  btn.textContent = '...';
-  btn.style.pointerEvents = 'none';
-
-  try {
-    await fetch('https://tally.so/r/A7aDye', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ email: email }),
-      mode: 'no-cors'
-    });
-  } catch (e) {}
-
-  document.getElementById('ctaForm').style.opacity = '0';
-  document.getElementById('ctaForm').style.pointerEvents = 'none';
-  document.getElementById('ctaMicro').style.display = 'none';
-  document.getElementById('ctaOk').style.display = 'block';
 }
 
   // Mini gauge interactivity
