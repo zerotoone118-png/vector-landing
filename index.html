@@ -1164,18 +1164,32 @@
     })
   );
 
-  function signup() {
-    const email = document.getElementById('ctaEmail').value.trim();
-    if (!email || !email.includes('@')) {
-      document.getElementById('ctaEmail').focus(); return;
-    }
-    document.getElementById('ctaForm').style.opacity = '0';
-    document.getElementById('ctaForm').style.pointerEvents = 'none';
-    document.getElementById('ctaMicro').style.display = 'none';
-    document.getElementById('ctaOk').style.display = 'block';
-    console.log('Signup:', email);
-    // fetch('https://tally.so/r/YOUR_ID', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email})});
+async function signup() {
+  const emailInput = document.getElementById('ctaEmail');
+  const email = emailInput.value.trim();
+  if (!email || !email.includes('@')) {
+    emailInput.focus();
+    return;
   }
+
+  const btn = document.querySelector('.cta-btn');
+  btn.textContent = '...';
+  btn.style.pointerEvents = 'none';
+
+  try {
+    await fetch('https://tally.so/r/A7aDye', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ email: email }),
+      mode: 'no-cors'
+    });
+  } catch (e) {}
+
+  document.getElementById('ctaForm').style.opacity = '0';
+  document.getElementById('ctaForm').style.pointerEvents = 'none';
+  document.getElementById('ctaMicro').style.display = 'none';
+  document.getElementById('ctaOk').style.display = 'block';
+}
 
   // Mini gauge interactivity
   document.querySelectorAll('.gauge-seg').forEach(seg => {
